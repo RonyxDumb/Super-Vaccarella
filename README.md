@@ -1,6 +1,6 @@
 # **Super Vaccarella**
 Super Vaccarella è un rpg dove, invece del famoso idraulico Mario, troviamo Vaccarella, la quale sta per ottenere la pensione.
-Sfortunatamente, non riesce a trovarla. Perciò la tua missione sarà aiutare Super Vaccarella cercando la pensione nella cantina dell'I.T.E.S Fraccacreta.
+Sfortunatamente, non riesce a trovarla. Perciò la tua missione sarà aiutarla cercando la sua pensione nella cantina dell'I.T.E.S Fraccacreta.
 
 Questo gioco è stato realizzato con collaborazione del piccolo gruppo classe e la realtà che ci circonda.
 
