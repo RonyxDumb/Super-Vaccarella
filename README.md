@@ -12,7 +12,7 @@ In alto nel file [Project.xml](https://github.com/RonyxDumb/Super-Vaccarella/blo
 Prima di compilare il gioco, assicurati di aver installato tutto il necessario spiegato in questa [guida](https://github.com/RonyxDumb/HaxeFlixel-Tutorial-Italiano).
 
 # **Comandi**
-Usa i tasti (W. A. S. D) [SU, GIU'. DESTRA. SINISTRA] per muoverti liberamente in 4 direzioni diverse.
+Usa i tasti (W, A, S, D) [SU, GIU', DESTRA, SINISTRA] per muoverti liberamente in 4 direzioni diverse.
 
 # **Crediti**
 Crediti si trovano in gioco nel menu apposito.
