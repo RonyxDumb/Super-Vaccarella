@@ -4,6 +4,9 @@ Sfortunatamente, non riesce a trovarla. Percià la tua missione sarà aiutare Su
 
 Questo gioco è stato realizzato con collaborazione del piccolo gruppo classe e la realtà che ci circonda.
 
+- (Demo giocabile online!)[https://ronyxdumb.github.io/Super-Vaccarella-HTML5.github.io/]
+- (Demo scaricabile per Windows!)[https://github.com/RonyxDumb/Super-Vaccarella/releases/tag/v2]
+
 # **Guida alla compilazione**
 In alto nel file [Project.xml](https://github.com/RonyxDumb/Super-Vaccarella/blob/main/Project.xml) sono situate le librerie utilizzate e le loro versioni.
 Prima di compilare il gioco, assicurati di aver installato tutto il necessario spiegato in questa [guida](https://github.com/RonyxDumb/HaxeFlixel-Tutorial-Italiano).
