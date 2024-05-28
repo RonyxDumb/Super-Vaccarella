@@ -1,0 +1,79 @@
+{
+  "name": "Level1",
+  "ogmoVersion": "3.4.0",
+  "levelPaths": ["."],
+  "backgroundColor": "#282c34ff",
+  "gridColor": "#3c4049cc",
+  "anglesRadians": true,
+  "directoryDepth": 5,
+  "layerGridDefaultSize": {"x": 8, "y": 8},
+  "levelDefaultSize": {"x": 320, "y": 240},
+  "levelMinSize": {"x": 1024, "y": 720},
+  "levelMaxSize": {"x": 1024, "y": 720},
+  "levelValues": [],
+  "defaultExportMode": ".json",
+  "compactExport": false,
+  "externalScript": "",
+  "playCommand": "",
+  "entityTags": [],
+  "layers": [
+    {
+      "definition": "entity",
+      "name": "entities",
+      "gridSize": {"x": 16, "y": 16},
+      "exportID": "48751625",
+      "requiredTags": [],
+      "excludedTags": []
+    },
+    {
+      "definition": "tile",
+      "name": "walls",
+      "gridSize": {"x": 8, "y": 8},
+      "exportID": "48759979",
+      "exportMode": 0,
+      "arrayMode": 0,
+      "defaultTileset": ""
+    }
+  ],
+  "entities": [
+    {
+      "exportID": "48768878",
+      "name": "player",
+      "limit": 1,
+      "size": {"x": 16, "y": 16},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ff0000ff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 16, "y": 16},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": [],
+      "values": []
+    }
+  ],
+  "tilesets": [
+    {"label": "FraccacretaFloor1", "path": "fraccacreta_tiles2_one.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEAUlEQVRIia2W647jNgyFP1KS40wm093BYnpBLy/eJ+gD9H3a7nYL9DK39cSyJLI/5HiL/s0YCGJISsRzSJ5DcXcueX7+6UdXDYgIrRlmjVoL8zzz7t073MHM0RgJGnj/4VeO+z2qgRACjuNAa40YI6pKq5VlWUgpkYYdT48PjOPAy2nGvXFz8wUCmBl6UfRACBERcAcRAaDUSkqJ1hrT9IKIICI4jjloCIiAudHMqLUiLtt/Omy/EYGUEjlnrFVCiKgIpRRqrZcD+OPjR56fnxFxwhpYqxVVpZTCMAyYO2bWAboDsn3OjLs47o6v585kuDut1b6HoyJoiCxlwf0VMlBrZcmZWivzfAKElAZKKZgZaRg4F6mqcjq99MAAUcHMGMcRd0dEMOunRegBh0Cthd1uhztoiKSYCBoQuBzA3Zd3vL29BeD5+YkQlBjDtu/uqH6+RiWs3wLea7+ZARBCQIP2cvMVpTuqgWbWe8Ydd4gxUlu7HECMcWPvcDisDDopJabpE6qy7YcQmKYJaw2nbWV3fnrg/SwCooqo0mrDHVJMiPSQBSXncjkAVaXWSmuNw+Ga1tp2SWuG/S8Dc15wnJwz9/f327qZcVbEMwh3R5DerKqwMu84uCAo8VIAIFtKc86kFMjZqLUxDAMKlNZ6szYjhsTVfo/qnre3ETOY55mU0hY8gIiuoAzRgIoyt8aoSmuN2rrSvQoAMwOcWisp7REpxKjUarxME4TI1dUeEeOvv//kl9/2aIi8//A7337zNbe3bzGz3g+tst9fAZ0UgOvjNbtxpJRC0ECMiRjj6wD43KTCfn/VpU2VnCuqgVPOjPtALRnBub19Q2tGXk7gxqfpE+6GA2VZOBwO/PPPPTEqIXQvAd8yeJpPjONIXUoHcimAWisxJkRgnl8YhmEtA2dZMtc3b5jnTCnOzTHww/ffcXO8YTfuKEvm6fGJOWeOxyMPD4/c3X3FNE3EGHh5mRARUkrUWjBzam1MnyZqbVxdyeUAzipS67JpdWt1XSsIcDxes5SMuzGdZmIcaGY8PT6sTd+dNcbAsiwcj0fM+lgSQiCltJVYSgl3mE+ZYRheoweglLKOE12jBQGcUpZu/+MOctfzsLpsq2VTmhgjy7IwjntiCJRSVtNby6XWddZqm6PHlCjLcrmMdqXo7x2Ar6YzcDzedHMSQVRW9gy3Sl2Zt9XEYox9mAthMyxgez9nqbVGrY0YA9PLdDmAXqORWts22J3Vw2wFuAZiOPN8Yrfb9ZJY9b2tMpvzgqpuLKc0YKsDA2tDw7JkVBURfR0A50v7gPZ5fbfbbSzLOhaUpRBTQlVAlBjjfxyYLdDT6cThcN1HZhWWpaAq25hRS2Xc7/gXbJ6d1lgURUYAAAAASUVORK5CYII=", "tileWidth": 16, "tileHeight": 16, "tileSeparationX": 0, "tileSeparationY": 0, "tileMarginX": 0, "tileMarginY": 0}
+  ]
+}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	
+	<!-- 
+		- COMPILATION SETTING -
+	    date: 30/04/2024
+
+		Haxe version = 4.3.3
+
+		LIBRERIES
+		Flixel version = 5.8.0
+		Flixel-addons version = 3.2.2
+		Flixel-ui version = 2.6.1
+		Openfl version = 9.3.3
+		Ogmo-3 version = 1.0.2 
+	-->
+
+	<!-- 
+		SUPER VACCARELLA 24
+
+		TEAM DI SVILUPPO: Francesco Pio Pipino
+		                  Alessandro D'antuono
+						  Stefano Cristino
+						  Emanuele Tarantelle
+						  Alessio Quitadamo
+						  Daniele Martucci
+
+	    DATA INIZIO SVILUPPO: 18/04/2024
+		DATA FNE SVILUPPO: 28/05/2024
+	-->
+	
+    <!-- IMPOSTAZIONI APPLICAZIONE -->
+    <meta title="SUPER VACCARELLA 24" packageName="com.stuendente19.supervaccarella" package="com.studente19.supervaccarella" version="2" company="The Vaccarella Crew" />
+    <app file="sv24" main="Main" path="build" preloader="flixel.system.FlxPreloader" />
+
+	<!-- Logo dell'Applicazione -->
+	<icon path="assets/appData/iconAPP.png" />
+
+    <!-- IMPOSTAZIONI SCHERMO -->
+    <window width="320" height="240" orientation="landscape" background="#000000" hardware="true" vsync="false" resizable="true" />
+	<window allow-high-dpi="true" unless="web" />
+	<window fullscreen="true" resizable="false" if="mobile || switch" />
+
+    <!-- IMPOSTAZIONI DIRECTORY -->
+    <assets path="assets" />
+	<classpath path="source" />
+	<set name="BUILD_DIR" value="buildVacc/debug" if="debug" />
+	<set name="BUILD_DIR" value="buildVacc/release" unless="debug" />
+
+	<!-- ESCLUSIONE ASSETS DURANTE L'ESPORTAZIONE (varia in base alla platform di esportazione) -->
+	<assets path="assets" exclude="*.ogg|*.wav" if="html5" />
+	<assets path="assets" exclude="*.mp3|*.wav" unless="html5" />
+	
+    <!-- LIBRERIE, APP SETTING AND USEFUL DATA -->
+	<haxelib name="flixel" />
+	<haxelib name="flixel-addons" />
+    <haxelib name="flixel-ui" />
+    <haxelib name="openfl"/>
+	<haxelib name="ogmo-3"/>
+
+	<!-- PERFORMANCE -->
+	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+
+	<!-- 
+		Quando compili -release, rimuovi i tool di debug
+	-->
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+
+    <!-- Definizioni -->
+    <section if="cpp">
+		<haxedef name="HXCPP_CHECK_POINTER" if="cpp" />
+		<haxedef name="HXCPP_STACK_LINE" if="cpp" />
+		<haxedef name="HXCPP_STACK_TRACE" if="cpp" />
+	</section>
+
+	<!--Disable the Flixel core focus lost screen-->
+	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
+
+    <undefine name="openfl-disable-handle-error" if="debug" />
+
+    <!-- Android Export Config -->
+    <section if="mobile">
+		    <!--Target SDK--> 
+		    <android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
+	</section>
+
+	<!-- Ios Export Config -->
+	<section if="ios">
+		<!--Dependency--> 
+		<dependency name="Metal.framework" if="${lime &lt; 8.0.0}" />
+	</section>
+</project>

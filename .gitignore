@@ -1,0 +1,6 @@
+# File che verranno ignorati durante il caricamento del codice sorgente su Github
+
+# Cartelle
+.vscode/
+build/
+buildVacc/
