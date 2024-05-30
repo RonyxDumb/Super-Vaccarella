@@ -115,7 +115,7 @@ class Tutorial extends FlxSubState {
             FlxG.camera.fade(FlxColor.WHITE, 1, false, goPlay);
 
             /* fade-out della canzone */
-            tutorialBGM.fadeOut(1, 0);
+            tutorialBGM.stop();
 
             /* emana suono 1, suono di transizione */ 
             sparkleSound.play();
@@ -131,7 +131,7 @@ class Tutorial extends FlxSubState {
             confirmTrap.play(false);
 
             /* fade-out della canzone */
-            tutorialBGM.fadeOut(0.5, 0);
+            tutorialBGM.stop();
 
             /* apri nuovamente lo state del Menu */
             FlxG.switchState(new Menu());

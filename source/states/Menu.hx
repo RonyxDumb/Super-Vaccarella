@@ -146,15 +146,12 @@ class Menu extends FlxState {
 
             /* emana suono */
             confirmTrap.play(false);
-
-            /* fade-out della canzone */
-            selectBGM.fadeOut(1, 0);
             
             /* timer per fermare la musica */
             new FlxTimer().start(1, function(tmr:FlxTimer)
             {
                 /* ferma la canzone */
-                selectBGM.fadeOut(0.5, 0);
+                selectBGM.stop();
             });
 
             /* flash della camera */
@@ -175,7 +172,7 @@ class Menu extends FlxState {
             FlxG.camera.fade(FlxColor.WHITE, 1, false, funcCrediti);
  
             /* fade-out della BGM */
-            selectBGM.fadeOut(0.5, 0);
+            selectBGM.stop();
         }
 
         /* se premi B */
@@ -192,7 +189,7 @@ class Menu extends FlxState {
             FlxG.camera.fade(FlxColor.BLACK, 1, false, funcTurnBack);
   
             /* fade-out della BGM */
-            selectBGM.fadeOut(0.5, 0);
+            selectBGM.stop();
         }
     }
 

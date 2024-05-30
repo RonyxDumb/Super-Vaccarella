@@ -210,8 +210,8 @@ class TitleScreen extends FlxState {
             /* disabilita gli input */
             FlxG.keys.enabled = false;
 
-            /* fade-out della ost */
-            titleBGM_VACCARELLA.fadeOut(1, 0);
+            /* stop della BGM */
+            titleBGM_VACCARELLA.stop();
         }
     }
 
