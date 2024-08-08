@@ -1,5 +1,8 @@
 package states;
 
+import flixel.ui.FlxVirtualPad;
+import shaders.Filter3D;
+import mobile.Vibradroid;
 import flixel.util.FlxTimer;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxEase;
@@ -48,16 +51,21 @@ class TitleScreen extends FlxState {
     var shadey:OldTVShader; // shaders data
     var shady:VCRDistortionShader; // shaders data
     var gBlur:GuassianBlur; // shaders data GUASSIAN
+    var filter3d:Filter3D;
     public static var filter:ShaderFilter; // shaders data
     public static var filter2:ShaderFilter; // shaders data
     public static var filter3:ShaderFilter; // shaders data GUASSIAN
+    public static var filter4:ShaderFilter; // shaders data 3D
+
+    /* MOBILE */
+    var virtualPad:mobile.FlxVirtualPad;
 
     override function create() {
         super.create();
 
         /* input disattivati */
         FlxG.keys.enabled = false;
-        FlxG.mouse.enabled = false;
+        // FlxG.mouse.enabled = false;
 
         /* fade-in della camera (nero) */
         FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
@@ -124,7 +132,7 @@ class TitleScreen extends FlxState {
         /* scritta per procedere munita di timer di visualizzazione*/
         pressEnterText = new FlxText();
         #if mobile
-        pressEnterText.text = "PREMI A";
+        pressEnterText.text = "CLICCA SULLO SCHERMO";
         pressEnterText.setFormat("SuperMario64DOT.ttf", 13, FlxColor.ORANGE);
         
         #else
@@ -142,6 +150,17 @@ class TitleScreen extends FlxState {
         pressEnterText.y = -topBlackBar.height;
         add(pressEnterText);
 
+        /* VIRTUALPAD for MOBILE */
+        virtualPad = new mobile.FlxVirtualPad(NONE, A);
+        virtualPad.y = 28;
+        virtualPad.x = 15;
+        virtualPad.scale.set(0.7, 0.7);
+        virtualPad.updateHitbox();
+        virtualPad.visible = false;
+        #if (mobile || debug)
+        add(virtualPad);
+        #end
+        
         /* ANIMATION DATA */
         FlxTween.tween(topBlackBar, {y: 0}, 0.5, {ease: FlxEase.quartOut, startDelay: 0.5});
         FlxTween.tween(animatedMario, {y: CENTER}, 0.5, {ease: FlxEase.quartOut, startDelay: 0.5});
@@ -154,10 +173,16 @@ class TitleScreen extends FlxState {
         shadey = new OldTVShader();
         shadey.iTime.value = [1.25];
         gBlur = new GuassianBlur();
-       
+        filter3d = new Filter3D();
+        filter3d.iTime.value = [1.25];
+        
         filter = new ShaderFilter(shady);
         filter2 = new ShaderFilter(shadey);
         filter3 = new ShaderFilter(gBlur);
+        filter4 = new ShaderFilter(filter3d);
+
+        /* applica i filtri allo schermo */
+        // FlxG.game.setFilters([]);
     }
 
     override function update(elpased:Float) {
@@ -181,7 +206,7 @@ class TitleScreen extends FlxState {
                 
                 /* altera nuovamente il testo */
                 #if mobile
-                pressEnterText.text = "PREMI A";
+                pressEnterText.text = "CLICCA SULLO SCHERMO";
                 #else
                 pressEnterText.text = "PREMI INVIO";
                 #end
@@ -190,6 +215,31 @@ class TitleScreen extends FlxState {
 
         /* INPUT */
         var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE || FlxG.keys.justPressed.A;
+
+        /* se clicchi il tasto A (mobile) */
+        if (virtualPad.buttonA.pressed) {
+            pressedEnter = true;
+        }
+
+        /*
+        if (FlxG.mouse.overlaps(pressEnterText)) {
+            pressEnterText.alpha = 0.55;
+
+            if (FlxG.mouse.justPressed) {
+                pressedEnter = true;
+            }
+        } else {
+            pressEnterText.alpha = 1;
+        }
+            */
+
+        #if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+				pressedEnter = true;
+		}
+		#end
 
         /* se clicchi invio */
         if (pressedEnter) {
@@ -200,9 +250,8 @@ class TitleScreen extends FlxState {
             /* per rendere la scritta visibile a lungo, altera il tempo di visualizzazione */
             time = 10000; /* un eternità */
 
-            /* altera testo in 'BUON DIVERTIMENTO' */
-            pressEnterText.text = "BUON DIVERTIMENTO";
-            pressEnterText.y = 185; /* poni la scritta più in alto */
+            pressEnterText.text = "";
+            // pressEnterText.y = 185; /* poni la scritta più in alto */
 
             /* fade-out della camera */
             FlxG.camera.fade(FlxColor.WHITE, 1, false, funcNextState);

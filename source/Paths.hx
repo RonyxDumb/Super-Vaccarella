@@ -6,7 +6,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 
 /**
- * A core class which handles determining asset paths.
+ * Sistema che gestisce la lettura dinamica degli assets
  */
 class Paths
 {

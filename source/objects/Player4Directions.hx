@@ -1,5 +1,6 @@
 package objects;
 
+import mobile.FlxVirtualPad;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.display.Sprite;
 import flixel.FlxObject;
@@ -17,17 +18,46 @@ import flixel.FlxSprite;
  */
 class Player4Directions extends FlxSprite {
 
+    #if (html5 && VACCARELLA_CHASE)
+    final SPEED:Int = 200; // solo quando viene rincorso da vaccarella 
+    #else
     final SPEED:Int = 80; // player speed
+    #end
 
-    public function new(xPos, yPos) {
+    public var virtualPad:FlxVirtualPad;
+
+    public function new(xPos, yPos):Void {
         super(xPos, yPos);
-        
-        // makeGraphic(8, 14, FlxColor.RED);
+
+        /* MOBILE PAD */
+        var virtualPad = new FlxVirtualPad(FlxDPadMode.FULL, FlxActionMode.NONE);
+         // virtualPad.scale.set(0.5, 0.5);
+         virtualPad.alpha = 0.80;
+         virtualPad.updateHitbox();
+ 
+         virtualPad.forEach((s)-> {
+             s.setGraphicSize(Std.int(s.width * 0.5));
+             s.updateHitbox();
+         });
+
+        virtualPad.buttonUp.x = 30.5; // done
+        virtualPad.buttonUp.y = 37; // done
+
+        virtualPad.buttonDown.x = 30.5; // done
+        virtualPad.buttonDown.y = 145; // done
+
+        virtualPad.buttonRight.x = 87; // done
+        virtualPad.buttonRight.y = 90; // done
+
+        virtualPad.buttonLeft.y = 90; // done
+        virtualPad.buttonLeft.x = -30; // done
+
+        virtualPad.x = 30;
+        virtualPad.y = 30;
 
         frames = FlxAtlasFrames.fromSparrow('assets/images/player/marioDefaultDance.png', 'assets/images/player/marioDefaultDance.xml');
         animation.addByPrefix('dancin', 'df3jhrp-2cef341a-5ee8-4c5f-9906-bba784b80eb6_', 30, false);
         
-
         /* imposta la grandezza */
         setGraphicSize(14, 14);
 
@@ -67,11 +97,42 @@ class Player4Directions extends FlxSprite {
         var left:Bool = false;
         var right:Bool = false;
 
-        // quando clicchi uno dei tasti
+        // quando clicchi uno dei tasti (tastiera && mobile)
+        // up = FlxG.keys.anyPressed([UP, W]) #if mobile virtualPad.buttonUp.justPressed; #end ;
+        // down = FlxG.keys.anyPressed([DOWN, S]) #if mobile virtualPad.buttonDown.justPressed; #end ;
+        // left = FlxG.keys.anyPressed([LEFT, A]) #if mobile virtualPad.buttonLeft.justPressed; #end ;
+        // right = FlxG.keys.anyPressed([RIGHT, D]) #if mobile virtualPad.buttonRight.justPressed; #end ;
+
+        /*
+         // se clicchi pulsante SU
+        if (virtualPad.buttonUp.pressed) {
+            FlxG.keys.pressed.UP;
+        }
+
+        if (virtualPad.buttonDown.pressed) {
+            FlxG.keys.pressed.DOWN;
+        }
+
+        if (virtualPad.buttonRight.pressed) {
+            FlxG.keys.pressed.RIGHT;
+        }
+
+        if (virtualPad.buttonLeft.pressed) {
+            FlxG.keys.pressed.LEFT;
+        } 
+        */
+
+        
         up = FlxG.keys.anyPressed([UP, W]);
         down = FlxG.keys.anyPressed([DOWN, S]);
         left = FlxG.keys.anyPressed([LEFT, A]);
         right = FlxG.keys.anyPressed([RIGHT, D]);
+
+        // if(virtualPad.buttonLeft.pressed){}
+        // down = virtualPad.buttonDown.pressed;
+        // up = virtualPad.buttonUp.pressed;
+        // left = virtualPad.buttonLeft.pressed;//FlxG.keys.anyPressed(['LEFT', 'A']);
+        // right = virtualPad.buttonRight.pressed;//FlxG.keys.anyPressed(['RIGHT', 'D']);
 
         // annulla movimenti opposti se:
         // su e giù

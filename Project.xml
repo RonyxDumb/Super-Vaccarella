@@ -26,11 +26,11 @@
 						  Daniele Martucci
 
 	    DATA INIZIO SVILUPPO: 18/04/2024
-		DATA FINE SVILUPPO: 28/05/2024
+		DATA FNE SVILUPPO: 28/05/2024
 	-->
 	
     <!-- IMPOSTAZIONI APPLICAZIONE -->
-    <meta title="SUPER VACCARELLA 24" packageName="com.stuendente19.supervaccarella" package="com.studente19.supervaccarella" version="2" company="The Vaccarella Crew" />
+    <meta title="SUPER VACCARELLA 24" packageName="com.stuendente19.supervaccarella" package="com.studente19.supervaccarella" version="2.1.0" company="The Vaccarella Crew" />
     <app file="sv24" main="Main" path="build" preloader="flixel.system.FlxPreloader" />
 
 	<!-- Logo dell'Applicazione -->

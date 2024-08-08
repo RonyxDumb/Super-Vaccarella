@@ -1,5 +1,6 @@
 package states;
 
+import mobile.FlxVirtualPad;
 import flixel.util.FlxGradient;
 import flixel.FlxSprite;
 import flixel.tweens.FlxTween;
@@ -32,6 +33,7 @@ class Crediti extends FlxState {
     var blackTopBar:FlxSprite; // generato by (lettura) texture
     var nutsTeamLogo:FlxSprite;
     var blackTopper:FlxSprite; // generato by code
+    var creditsUpdate:FlxSprite; // vi adoro guys
 
     /* AUDIO */
     var credMusic:FlxSound; // BGM di sottofondo
@@ -46,11 +48,11 @@ class Crediti extends FlxState {
     var mAleQ:FlxText; // Alessio Guitadamo (1C)
     var mDanM:FlxText; // Daniele Martucci (1D)
 
+    /* MOBILE */
+    var virtualPad:mobile.FlxVirtualPad;
+
     override function create() {
         super.create();
-
-        FlxG.mouse.visible = true; /* mouse utilizzabile in questo state */
-        FlxG.keys.enabled = true;
 
         /* fade-in della camera */
         FlxG.camera.fade(FlxColor.WHITE, 1, true);
@@ -104,26 +106,39 @@ class Crediti extends FlxState {
         protoText2.setFormat(Paths.font('vcr.ttf'), 10, FlxColor.WHITE);
         // add(protoText2); 
 
+        /* uhhh il progetto ha preso una svolta, tanta gente lo adora adesso.
+        A dirla tutta sono felicissimo, eh nessuno ha mai supportato così tanto
+        un progetto diretto dal sottoscritto. Tutta questa hype mi motiva tantissimo
+        e chissà, nuovi contenuti? Beh per ora posso solo dirvi, thank you! */
+        creditsUpdate = new FlxSprite(); // un piccolo pensierino per voi...
+        creditsUpdate.loadGraphic(Paths.image("credits/Credits_31072024_update"));
+        creditsUpdate.y = -FlxG.height;
+        add(creditsUpdate);
+
         // testo per tornare al menu
         exitText = new FlxText();
         exitText.color = FlxColor.WHITE;
         exitText.size = 15;
         // exitText.screenCenter(X);
-        exitText.x = 1;
-        // exitText.y = 220;
+        exitText.x = 30;
+        exitText.y = 215;
+        #if mobile
+        exitText.text = 'Clicca per tornare indietro';
+        #else
         exitText.text = 'Premi B per tornare indietro';
+        #end
         exitText.font = 'vcr.ttf';
         exitText.setFormat(Paths.font('vcr.ttf'), 15, FlxColor.WHITE);
         exitText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        exitText.y = -FlxG.height;
+        exitText.updateHitbox();
         add(exitText);
 
         // THE VACCARELLA CREW
         credText = new FlxText(/*0, 10, 0, "The Vaccarella Crew", 20*/);
-        credText.x = 0.5;
+        credText.x = 114;
         // credText.y = 0.5;
         credText.y = -FlxG.height;
-        credText.text = 'THE VACCARELLA CREW';
+        credText.text = 'CREDITI';
         credText.setFormat(Paths.font("vcr.ttf"), 23, FlxColor.WHITE, CENTER);
         // credText.screenCenter(X);
         add(credText);
@@ -136,7 +151,7 @@ class Crediti extends FlxState {
         nutsTeamLogo.y = -blackTopBar.y;
         // nutsTeamLogo.scale.set(0.6, 0.6);
         // nutsTeamLogo.setGraphicSize(70);
-        add(nutsTeamLogo);
+        // add(nutsTeamLogo);
 
         /* TEXT DATA */
         mAleD = new FlxText(0, /*60*/-FlxG.height, 0, "Alessandro D'Antuono", 20);
@@ -171,12 +186,12 @@ class Crediti extends FlxState {
         mDanM.screenCenter(X);
 
         /* AGGIUNGI TUTTI ALLO STATE */
-        add(mAleD);
-        add(mFraP);
-        add(mStef);
-        add(mEman);
-        add(mAleQ);
-        add(mDanM);
+        // add(mAleD);
+        // add(mFraP);
+        // add(mStef);
+        // add(mEman);
+        // add(mAleQ);
+        // add(mDanM);
 
         /* ANIMATION DATA */
         FlxTween.tween(mAleD, {y: 60}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
@@ -188,8 +203,9 @@ class Crediti extends FlxState {
         // FlxTween.tween(blackTopBar, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
         FlxTween.tween(blackTopper, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
         FlxTween.tween(credText, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(exitText, {y: 225}, 0.8, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(nutsTeamLogo, {y: 0}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(creditsUpdate, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        // FlxTween.tween(exitText, {y: 215}, 0.8, {ease: FlxEase.quartOut, startDelay: 0.5});
+        // FlxTween.tween(nutsTeamLogo, {y: 0}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
         // FlxTween.tween(credText, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
 
         // protoText = new FlxText(200, 10, 0, "PROTOTIPO");
@@ -203,6 +219,15 @@ class Crediti extends FlxState {
         protoText.x = Lib.current.stage.width - protoText.textWidth - 10;
         protoText.y = Lib.current.stage.height - protoText.textHeight - 10;
         */
+
+        /* MOBILE */
+        virtualPad = new FlxVirtualPad(NONE, A_B);
+        virtualPad.scale.set(0.5, 0.5);
+        virtualPad.x = 35;
+        virtualPad.y = 40;
+        #if (mobile || debug)
+        // add(virtualPad);
+        #end
     }
 
     override function update(elapsed:Float) {
@@ -211,6 +236,19 @@ class Crediti extends FlxState {
         /* INPUT */
         var pressedB:Bool = FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.B;
         var pressedS:Bool = FlxG.keys.justPressed.S;
+
+        /* se il mouse va sulla scritta per tornare indietro */
+        if (FlxG.mouse.overlaps(exitText)) {
+            // schiarisci il testo
+            exitText.alpha = 0.55;
+
+            // se clicchi il mouse
+            if (FlxG.mouse.justPressed) {
+                pressedB = true;
+            }
+        } else {
+            exitText.alpha = 1;
+        }
 
         /* se premi B */
         if (pressedB) {

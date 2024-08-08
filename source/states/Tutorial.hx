@@ -1,5 +1,7 @@
 package states;
 
+import mobile.FlxVirtualPad;
+import mobile.Vibradroid;
 import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.text.FlxText;
@@ -23,9 +25,12 @@ class Tutorial extends FlxSubState {
     /* SPRITES */
     var cubeGrid:FlxBackdrop;
     var blackTopper:FlxSprite;
+    var cosaFareContesto:FlxSprite;
+
+    /* TESTI */
     var tutorialText:FlxText;
     var exitText:FlxText;
-    var cosaFareContesto:FlxSprite;
+    var continuaText:FlxText;
     
     /* SOUNDS */
     var confirmTrap:FlxSound;
@@ -35,12 +40,15 @@ class Tutorial extends FlxSubState {
     /* MUSIC */
     var tutorialBGM:FlxSound;
 
+    /* MOBILE */
+    var virtualPad:mobile.FlxVirtualPad;
+
     public function new(xPos:Float, yPos:Float) {
         super();
 
         /* abilita i comandi */
         FlxG.keys.enabled = true;
-        FlxG.mouse.enabled = false;
+        // FlxG.mouse.enabled = false;
 
         /* MUSIC */
         tutorialBGM = new FlxSound().loadEmbedded(Paths.music('tutorial/BGM_TUTORIAL'), true);
@@ -64,7 +72,7 @@ class Tutorial extends FlxSubState {
         add(blackTopper);
 
         /* testo 'COSA FARE' */
-        tutorialText = new FlxText();
+        tutorialText = new FlxText(); // tutorial come diventare Skibidi Alessandro Toilet
         tutorialText.x = 100;
         // tutorialText.screenCenter(X);
         // credText.y = 0.5;
@@ -85,19 +93,50 @@ class Tutorial extends FlxSubState {
         exitText.color = FlxColor.WHITE;
         exitText.size = 15;
         // exitText.screenCenter(X);
-        exitText.x = 1;
+        exitText.x = 164;
         // exitText.y = 220;
-        exitText.text = 'A: Continua       B: Torna indietro';
+        #if mobile
+        exitText.text = 'Torna indietro';
+        #else
+        exitText.text = 'B: Torna indietro';
+        #end
         exitText.font = 'vcr.ttf';
         exitText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.3, 1);
         exitText.y = -FlxG.height;
         add(exitText);
 
+        /* testo per procedere */
+        continuaText = new FlxText();
+        continuaText.color = FlxColor.WHITE;
+        continuaText.size = 15;
+        // exitText.screenCenter(X);
+        continuaText.x = 1;
+        // exitText.y = 220;
+        #if mobile
+        continuaText.text = 'Continua';
+        #else
+        continuaText.text = 'A: Continua';
+        #end
+        continuaText.font = 'vcr.ttf';
+        continuaText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.3, 1);
+        continuaText.y = -FlxG.height;
+        add(continuaText);
+
+        /* mobile */
+        virtualPad = new mobile.FlxVirtualPad(NONE, A_B);
+        virtualPad.scale.set(0.6, 0.6);
+        virtualPad.x = 30;
+        virtualPad.y = 33;
+        #if (mobile || debug)
+        // add(virtualPad);
+        #end
+
         /* ANIMATION DATA */
         FlxTween.tween(cubeGrid, {alpha: 1}, 0.4, {ease: FlxEase.smoothStepIn});
         FlxTween.tween(blackTopper, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
         FlxTween.tween(tutorialText, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(exitText, {y: 225}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(exitText, {y: 218}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(continuaText, {y: 218}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
         FlxTween.tween(cosaFareContesto, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
     }
 
@@ -107,6 +146,30 @@ class Tutorial extends FlxSubState {
         /* input */
         var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE || FlxG.keys.justPressed.A;    
         var pressedBack:Bool = FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.B;
+
+        /* MOBILE INPUT */
+        // se il mouse va sopra la scritta continua
+        if (FlxG.mouse.overlaps(continuaText)) {
+            continuaText.alpha = 0.55;
+
+            if (FlxG.mouse.justPressed) {
+                pressedEnter = true;
+            }
+        } else {
+            continuaText.alpha = 1;
+        }
+
+        // se il mouse va sopra la scritta torna indietro
+        if (FlxG.mouse.overlaps(exitText)) {
+            exitText.alpha = 0.55;
+
+            if (FlxG.mouse.justPressed) {
+                pressedBack = true;
+            }
+        } else {
+            exitText.alpha = 1;
+        }
+
 
         /* se clicchi INVIO */
         if (pressedEnter) {

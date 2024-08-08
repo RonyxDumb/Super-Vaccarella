@@ -28,7 +28,7 @@ class Logo extends FlxState {
 
         /* INPUT */
         FlxG.keys.enabled = true;
-        FlxG.mouse.enabled = false;
+        // FlxG.mouse.enabled = false;
 
         /* texture logo 'I.T.E.S A.Fraccacreta' */
 		var ites_logo:FlxSprite = new FlxSprite(Paths.image("title_logo/ites_logo"));

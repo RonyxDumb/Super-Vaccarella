@@ -1,5 +1,7 @@
 package states;
 
+import mobile.FlxButton;
+import mobile.FlxVirtualPad;
 import flixel.util.FlxTimer;
 import flixel.tweens.misc.ColorTween;
 import flixel.tweens.FlxEase;
@@ -39,11 +41,14 @@ class Menu extends FlxState {
     var creditiText:FlxText;
     var turnBackText:FlxText;
 
+    /* MOBILE */
+    var virtualPad:mobile.FlxVirtualPad;
+
     override function create() {
         super.create();
 
         /* INPUT disattivati */
-        FlxG.mouse.enabled = false;
+        // FlxG.mouse.enabled = false;
         FlxG.keys.enabled = false;
 
         /* timer per rendere i comandi accessibili */
@@ -94,7 +99,11 @@ class Menu extends FlxState {
         /* testo collegato al 'buttonPlay' per procedere con il gioco */
         giocaText = new FlxText();
         giocaText.size = 10;
-        giocaText.text = 'Premi A per giocare';
+        #if mobile
+        giocaText.text = 'Clicca per giocare';
+        #else
+        giocaText.text = 'Clicca A per giocare';
+        #end
         giocaText.x = buttonPlay.x + 65;
         // giocaText.y = -FlxG.height;
         giocaText.y = buttonPlay.y + 12;
@@ -111,18 +120,34 @@ class Menu extends FlxState {
         /* testo collegato al 'redStone' per procedere con i crediti */
         creditiText = new FlxText();
         creditiText.size = 10;
-        creditiText.text = 'Premi C per i crediti';
+        #if mobile
+        creditiText.text = 'Clicca per i crediti';
+        #else
+        creditiText.text = 'Clicca C per i crediti';
+        #end
         creditiText.x = redStone.x + 65;
         creditiText.y = redStone.y + 12;
         add(creditiText);
 
         /* testo per tornare indietro */
         turnBackText = new FlxText();
-        turnBackText.text = 'Premi B per tornare indietro';
+        #if mobile
+        turnBackText.text = 'Clicca per tornare indietro';
+        #else
+        turnBackText.text = 'Clicca B per tornare indietro';
+        #end
         turnBackText.size = 10;
         turnBackText.screenCenter(X);
         turnBackText.y = 190;
         add(turnBackText);
+
+        /* MOBILE */
+        virtualPad = new FlxVirtualPad(NONE, A_B_C);
+        virtualPad.scale.set(0.5, 0.5);
+        // virtualPad.alpha = 0.45;
+        virtualPad.y = 40;
+        virtualPad.x = 30;
+        // add(virtualPad);
 
         /* ANIMATION DATA */
         FlxTween.tween(yellowBG, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
@@ -137,11 +162,60 @@ class Menu extends FlxState {
         var pressedB:Bool = FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.B;
         var pressedC:Bool = FlxG.keys.justPressed.C;
 
+        /* MOBILE ACTIONS */
+        /*
+        if (virtualPad.buttonA.pressed || FlxG.mouse.overlaps(virtualPad.buttonA)) {
+
+            if (FlxG.mouse.justPressed) {
+                pressedA = true;
+            }
+        }
+
+        if (virtualPad.buttonB.pressed) {
+            pressedB = true;
+        }
+
+        if (virtualPad.buttonC.pressed) {
+            pressedC = true;
+        }
+        */
+        /////////////////////
+
+        /* se il mouse va sopra il buttonplay */
+        if (FlxG.mouse.overlaps(buttonPlay)) {
+            /* altera colore rendendolo scuro */
+            // buttonPlay.color = FlxColor.GRAY;
+            buttonPlay.alpha = 0.55;
+
+            /* se con il mouse vai sopra al bottone */
+            if (FlxG.mouse.justPressed) {
+                pressedA = true;
+            }
+        } else {
+            /* altrimenti, il colore del buttonplay torna normale */
+            buttonPlay.alpha = 1;
+        }
+
+        /* se il mouse va sopra il redstone */
+        if (FlxG.mouse.overlaps(redStone)) {
+            /* altera colore rendendolo scuro */
+            // redStone.color = FlxColor.GRAY;
+            redStone.alpha = 0.55;
+
+            /* se con il mouse vai sopra al bottone */
+            if (FlxG.mouse.justPressed) {
+                pressedC = true;
+            }
+        } else {
+            /* altrimenti, il colore del buttonplay torna normale */
+            redStone.alpha = 1;
+        }
+
         /* se premi A */
         if (pressedA) {
 
             /* disabilita INPUT */
-            FlxG.mouse.enabled = false;
+            // FlxG.mouse.enabled = false;
             FlxG.keys.enabled = false;
 
             /* emana suono */
@@ -158,11 +232,24 @@ class Menu extends FlxState {
             FlxG.camera.flash(FlxColor.WHITE, 1, funcOpenComandi);
         }
 
+        /* se il mouse va sopra la scritta "torna indietro" */
+        if (FlxG.mouse.overlaps(turnBackText)) {
+            /* schiarisci il testo */
+            turnBackText.alpha = 0.55;
+
+            /* se clicchi col mouse */
+            if (FlxG.mouse.justPressed) {
+                pressedB = true; /* sarà come aver cliccato dalla tastiera */
+            }
+        } else {
+            turnBackText.alpha = 1;
+        }
+
         /* se premi C */
         if (pressedC) {
 
             /* disabilita INPUT */
-            FlxG.mouse.enabled = false;
+            // FlxG.mouse.enabled = false;
             FlxG.keys.enabled = false;
  
             /* emana suono */
@@ -179,7 +266,7 @@ class Menu extends FlxState {
         if (pressedB) {
 
             /* disabilita INPUT */
-            FlxG.mouse.enabled = false;
+            // FlxG.mouse.enabled = false;
             FlxG.keys.enabled = false;
   
             /* emana suono */

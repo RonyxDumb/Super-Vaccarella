@@ -1,6 +1,11 @@
-# File che verranno ignorati durante il caricamento del codice sorgente su Github
+# Questo file contiene tutti gli elementi (File, Cartelle) che verranno esclusi durante il caricamento del codice sorgente su Github.
 
 # Cartelle
 .vscode/
 build/
 buildVacc/
+setup/temp/
+
+# File
+sv24-windows-64bit.zip
+sv24-debug.apk

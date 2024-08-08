@@ -1,112 +1,94 @@
 package;
 
-import flixel.util.FlxColor;
-import flixel.FlxCamera;
-import openfl.Assets;
-import openfl.display.FPS;
-import openfl.Lib;
-import flixel.FlxState;
 import flixel.FlxG;
+import debug.MemoryCounter;
 import flixel.FlxGame;
+import flixel.FlxState;
+import openfl.display.FPS;
 import openfl.display.Sprite;
-import states.Logo;
+import openfl.events.Event;
+import openfl.Lib;
 
-/**	
- * date: 27/04/2024
- * Impostazioni generali del gioco
-**/
+/**
+ * Classe principale che inizializza HaxeFlixel e avvia il gioco nel suo state iniziale.
+ */
 class Main extends Sprite
 {
-	/* IL GIOCO */
-	var game:FlxGame; // il gioco
+  var gameWidth:Int = 320; // Larghezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom).
+  var gameHeight:Int = 240; // Altezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom).
+  var initialState:Class<FlxState> = InitState; // FlxState con cui il gioco comincia
+  var zoom:Float = -1; // Se -1, lo zoom viene calcolato automaticamente per adattarsi alle dimensioni della finestra.
+  #if web
+  var framerate:Int = 60; // A quanti fotogrammi per secondo deve correre il gioco (se esportato per web)
+  #else
+  var framerate:Int = 144; // A quanti fotogrammi per secondo deve correre il gioco (se esportato per qualunque altro target)
+  #end
+  var skipSplash:Bool = true; // Se saltare la schermata iniziale di flixel che appare nella modalità di rilascio.
+  var startFullscreen:Bool = false; // Se avviare il gioco a schermo intero sui target desktop
 
-	/* GRANDEZZA SCHERMO */
-	var gameWidht:Int = 320; // grandezza schermo (larghezza)
-	var gameHeight:Int = 240; // grandezza schermo (altezza)
+  public static function main():Void
+  {
+    Lib.current.addChild(new Main());
+  }
 
-	/* FPS */
-	var FPS:FPS; // fps
+  public function new()
+  {
+    super();
 
-	/* SALTARE HAXEFLIXEL LOGO*/
-	var skipSplash:Bool = true; // scegli se saltare o meno l'intro di HaxeFlixel
+    if (stage != null)
+    {
+      init();
+    }
+    else
+    {
+      addEventListener(Event.ADDED_TO_STAGE, init);
+    }
+  }
 
-	/* STATE CON CUI COMINCIA IL GIOCO */
-	var initialState:Class<FlxState> = Logo; // inserisci qui lo state con cui inizia il gioco
+  function init(?event:Event):Void
+  {
+    if (hasEventListener(Event.ADDED_TO_STAGE))
+    {
+      removeEventListener(Event.ADDED_TO_STAGE, init);
+    }
 
-	/* A QUANTI FRAMERATE DEVE CORRERE IL GIOCO */
-	/* se il gioco viene esportato per html5 */
-	#if html5
-	var framerate:Int = 60; // inserisci a quanti frame dovrebbe girare il gioco
-	#else
-	/* se il gioco viene esportato per qualunque altra platform */
-	var framerate:Int = 120; // inserisci a quanti frame dovrebbe girare il gioco
-	#end
+    setupGame();
+  }
 
-	/* CAMERA PRINCIPALE DEL GIOCO */
-	private var camera:FlxCamera; // la camera del gioco
+  /**
+   * Un contatore di fotogrammi mostrato in alto a sinistra.
+   */
+  public static var fpsCounter:FPS;
 
-	public function new()
-	{
-		super();
+  /**
+   * Un contatore di RAM mostrato in alto a sinistra.
+   */
+  public static var memoryCounter:MemoryCounter;
 
-		/* all'avvio del gioco, imposta le impsotazioni del gioco chiamando la funzione apposita */
-		setupGame();
-	}
+  function setupGame():Void
+  {
+    // addChild gets called by the user settings code.
+    fpsCounter = new FPS(10, 3, 0xFFFFFF);
 
-	public function main():Void
-	{
-		Lib.current.addChild(new Main());
-	}
+    // addChild gets called by the user settings code.
+    #if !html5
+    memoryCounter = new MemoryCounter(10, 13, 0xFFFFFF);
+    #end
 
-	/* funzione che imposta ed applica le impostazioni del gioco */
-	private function setupGame():Void
-	{
-		/* impostazioni del gioco durante l'avvio */
-		game = new FlxGame(gameWidht, gameHeight, initialState, framerate, framerate, true, false);
-		
-		/* applica le impostazioni del gioco aggiungendole */
-		addChild(game);
+    var game:FlxGame = new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 
-		/* GRANDEZZA SCHERMO */
-		var stageHeight:Int = Lib.current.stage.stageHeight;
-		var stageWidht:Int = Lib.current.stage.stageWidth;
+    addChild(game);
 
-		/* testo che visualizza a quanti FPS gira il gioco */
-		FPS = new FPS(10, 10, FlxColor.WHITE);
-		#if !html5
-		addChild(FPS);
-		#end
+    addChild(fpsCounter);
 
-		/* all'avvio, carica tutti i suoni */
-		FlxG.sound.cacheAll();
+    addChild(memoryCounter);
 
-		/* all'uscita della finestra, non interrompere il gioco */
-		FlxG.autoPause = false;
+    FlxG.mouse.enabled = true;
 
-		/* rendi il mouse inutilizzabile */
-		#if html5
-		FlxG.mouse.visible = false;
-		FlxG.mouse.enabled = false;
-		#end
-
-		/////////////////////// OTTIMIZZAZIONE ////////////////////
-
-		/* pulisci cache delle canzoni */
-		Assets.cache.clear("music");
-		Assets.cache.clear("assets/music");
-
-		/* pulisci cache delle immagini */
-		Assets.cache.clear("images");
-		Assets.cache.clear("assets/images");
-
-		/* pulisci cache dei suoni */
-		Assets.cache.clear("sounds");
-		Assets.cache.clear("assets/sounds");
-
-		/* pulisci cache dei dati del gioco */
-		Assets.cache.clear("data");
-		Assets.cache.clear("assets/data");
-
-		///////////////////////////////////////////////////////////
-	}
+    #if hxcpp_debug_server
+    trace('hxcpp_debug_server attivato! Puoi ora connetterti al gioco con il debugger..');
+    #else
+    trace('hxcpp_debug_server disattivato! Questa build non supporta debugging.');
+    #end
+  }
 }

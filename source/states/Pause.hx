@@ -99,10 +99,14 @@ class Pause extends FlxSubState {
 
         /* testo per chiudere il menu della pausa */
         exitCourse = new FlxText();
+        #if mobile
+        exitCourse.text = 'Clicca qui per tornare al menu';
+        #else
         exitCourse.text = 'Premi E per tornare al menu';
+        #end
         exitCourse.color = FlxColor.RED;
-        // exitCourse.font = 'Mario64.ttf';
-        // exitCourse.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.2);
+        exitCourse.font = 'vcr.ttf';
+        exitCourse.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1);
         exitCourse.size = 15;
         exitCourse.y = 220;
         exitCourse.x = 1;
@@ -129,6 +133,16 @@ class Pause extends FlxSubState {
 
         /* aggiorna la posizione e segui il giocatore */
         FlxG.camera.follow(cameraFollow, LOCKON, 1);
+
+        if (FlxG.mouse.overlaps(exitCourse)) {
+            exitCourse.alpha = 0.55;
+
+            if (FlxG.mouse.justPressed) {
+                pressedE = true;
+            }
+        } else {
+            exitCourse.alpha = 1;
+        }
 
         /* se premi INVIO */
         if (pressedEnter) {
