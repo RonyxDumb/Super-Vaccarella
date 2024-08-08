@@ -13,7 +13,7 @@ Prima di compilare il gioco, assicurati di aver installato tutto il necessario s
 
 # **Comandi**
 - Windows: Usa i tasti (W, A, S, D) [SU, GIU', DESTRA, SINISTRA] per muoverti liberamente in 4 direzioni diverse.
-- Android: Nel gioco sono situati elementi (ad esempio scritte, pulsanti o interamente lo schermo) con i quali potrai interagire nel gioco.
+- Android: Nel gioco sono situati elementi (ad esempio scritte, pulsanti o interamente lo schermo cliccabili) con i quali potrai interagire.
 
 # **Crediti**
 Crediti si trovano in gioco nel menu apposito.
