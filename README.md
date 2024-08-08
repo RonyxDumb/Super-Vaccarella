@@ -5,7 +5,7 @@ Sfortunatamente, non riesce a trovarla. Perciò la tua missione sarà aiutarla c
 Questo gioco è stato realizzato grazie alla collaborazione del piccolo gruppo classe, il gruppo GTA e della realtà che ci circonda.
 
 - [Disponibile online!](https://ronyxdumb.github.io/Super-Vaccarella-HTML5.github.io/)
-- [Scaricabile per piattaforme Windows ed Android!](https://github.com/RonyxDumb/Super-Vaccarella/releases/tag/v2)
+- [Scaricabile per piattaforme Windows ed Android!](https://github.com/RonyxDumb/Super-Vaccarella/releases/)
 
 # **Guida alla compilazione**
 In alto nel file [Project.xml](https://github.com/RonyxDumb/Super-Vaccarella/blob/main/Project.xml) sono situate le librerie utilizzate e le loro versioni.
