@@ -10,10 +10,3 @@ Questo gioco è stato realizzato grazie alla collaborazione del piccolo gruppo c
 # **Guida alla compilazione**
 In alto nel file [Project.xml](https://github.com/RonyxDumb/Super-Vaccarella/blob/main/Project.xml) sono situate le librerie utilizzate e le loro versioni.
 Prima di compilare il gioco, assicurati di aver installato tutto il necessario spiegato in questa [guida](https://github.com/RonyxDumb/HaxeFlixel-Tutorial-Italiano).
-
-# **Comandi**
-- Windows: Usa i tasti (W, A, S, D) [SU, GIU', DESTRA, SINISTRA] per muoverti liberamente in 4 direzioni diverse.
-- Android: Nel gioco sono situati elementi (ad esempio scritte, pulsanti o interamente lo schermo cliccabili) con i quali potrai interagire.
-
-# **Crediti**
-Crediti si trovano in gioco nel menu apposito.
