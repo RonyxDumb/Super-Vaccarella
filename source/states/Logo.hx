@@ -33,6 +33,8 @@ class Logo extends FlxState {
         /* texture logo 'I.T.E.S A.Fraccacreta' */
 		var ites_logo:FlxSprite = new FlxSprite(Paths.image("title_logo/ites_logo"));
         ites_logo.visible = false;
+        ites_logo.setGraphicSize(1280, 720);
+        ites_logo.screenCenter();
         add(ites_logo);
 
         /* suono della moneta */

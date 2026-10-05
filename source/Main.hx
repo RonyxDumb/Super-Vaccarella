@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSprite;
 import flixel.FlxG;
 import debug.MemoryCounter;
 import flixel.FlxGame;
@@ -14,8 +15,8 @@ import openfl.Lib;
  */
 class Main extends Sprite
 {
-  var gameWidth:Int = 320; // Larghezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom).
-  var gameHeight:Int = 240; // Altezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom).
+  var gameWidth:Int = 1280; // Larghezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom). 320
+  var gameHeight:Int = 720; // Altezza del gioco in pixel (potrebbe essere inferiore/superiore in pixel effettivi a seconda dello zoom). 240
   var initialState:Class<FlxState> = InitState; // FlxState con cui il gioco comincia
   var zoom:Float = -1; // Se -1, lo zoom viene calcolato automaticamente per adattarsi alle dimensioni della finestra.
   #if web
@@ -79,10 +80,11 @@ class Main extends Sprite
 
     addChild(game);
 
+    #if debug
     addChild(fpsCounter);
-
     addChild(memoryCounter);
-
+    #end
+    
     FlxG.mouse.enabled = true;
 
     #if hxcpp_debug_server

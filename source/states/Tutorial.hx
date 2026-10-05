@@ -67,77 +67,71 @@ class Tutorial extends FlxSubState {
         add(cubeGrid);
 
         /* piccolo rettangolo in alto allo schermo */
-        blackTopper = new FlxSprite().makeGraphic(FlxG.width, 28, FlxColor.BLACK);
-        blackTopper.y = 0;
+        blackTopper = new FlxSprite().makeGraphic(FlxG.width, 70, FlxColor.BLACK);
+        blackTopper.y = -blackTopper.height;
         add(blackTopper);
 
         /* testo 'COSA FARE' */
-        tutorialText = new FlxText(); // tutorial come diventare Skibidi Alessandro Toilet
-        tutorialText.x = 100;
-        // tutorialText.screenCenter(X);
-        // credText.y = 0.5;
-        tutorialText.y = -FlxG.height;
-        tutorialText.text = 'COSA FARE';
-        tutorialText.setFormat(Paths.font("vcr.ttf"), 23, FlxColor.WHITE, CENTER);
-        // credText.screenCenter(X);
+        tutorialText = new FlxText(0, -100, FlxG.width, 'COSA FARE');
+        tutorialText.setFormat(Paths.font("vcr.ttf"), 50, FlxColor.WHITE, CENTER);
+        tutorialText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
         add(tutorialText);
 
-        /* texture nella quale troviamo scritta la trama e comandi del gioco */
+        /* texture con la trama */
         cosaFareContesto = new FlxSprite();
         cosaFareContesto.loadGraphic(Paths.image('menu/CosaFareMenu'));
+        cosaFareContesto.setGraphicSize(950); 
+        cosaFareContesto.updateHitbox();
+        cosaFareContesto.screenCenter(X);
         cosaFareContesto.y = -FlxG.height;
         add(cosaFareContesto);
 
-        /* testo per tornare al Menu */
-        exitText = new FlxText();
-        exitText.color = FlxColor.WHITE;
-        exitText.size = 15;
-        // exitText.screenCenter(X);
-        exitText.x = 164;
-        // exitText.y = 220;
-        #if mobile
-        exitText.text = 'Torna indietro';
-        #else
-        exitText.text = 'B: Torna indietro';
-        #end
-        exitText.font = 'vcr.ttf';
-        exitText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.3, 1);
-        exitText.y = -FlxG.height;
-        add(exitText);
-
-        /* testo per procedere */
+        /* ORA A SINISTRA: testo per procedere (A / Continua) */
         continuaText = new FlxText();
-        continuaText.color = FlxColor.WHITE;
-        continuaText.size = 15;
-        // exitText.screenCenter(X);
-        continuaText.x = 1;
-        // exitText.y = 220;
         #if mobile
         continuaText.text = 'Continua';
         #else
         continuaText.text = 'A: Continua';
         #end
-        continuaText.font = 'vcr.ttf';
-        continuaText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.3, 1);
+        continuaText.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.WHITE, LEFT);
+        continuaText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
+        continuaText.x = 60; // Posizionato a SINISTRA
         continuaText.y = -FlxG.height;
         add(continuaText);
 
-        /* mobile */
+        /* ORA A DESTRA: testo per tornare al Menu (B / Torna indietro) */
+        exitText = new FlxText();
+        #if mobile
+        exitText.text = 'Torna indietro';
+        #else
+        exitText.text = 'B: Torna indietro';
+        #end
+        exitText.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.WHITE, RIGHT);
+        exitText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
+        exitText.x = FlxG.width - exitText.width - 60; // Posizionato a DESTRA
+        exitText.y = -FlxG.height;
+        add(exitText);
+
+        /* mobile pad */
         virtualPad = new mobile.FlxVirtualPad(NONE, A_B);
-        virtualPad.scale.set(0.6, 0.6);
-        virtualPad.x = 30;
-        virtualPad.y = 33;
+        virtualPad.scale.set(1.0, 1.0);
+        virtualPad.x = 20;
+        virtualPad.y = FlxG.height - virtualPad.height - 20;
         #if (mobile || debug)
         // add(virtualPad);
         #end
 
         /* ANIMATION DATA */
+        var bottomY:Float = FlxG.height - exitText.height - 25;
+
         FlxTween.tween(cubeGrid, {alpha: 1}, 0.4, {ease: FlxEase.smoothStepIn});
+        
         FlxTween.tween(blackTopper, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(tutorialText, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(exitText, {y: 218}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(continuaText, {y: 218}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(cosaFareContesto, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(tutorialText, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(cosaFareContesto, {y: 10}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        
+        FlxTween.tween(continuaText, {y: bottomY}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(exitText, {y: bottomY}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
     }
 
     override function update(elapsed:Float) {

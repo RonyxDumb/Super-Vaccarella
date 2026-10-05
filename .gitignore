@@ -5,6 +5,7 @@
 build/
 buildVacc/
 setup/temp/
+material_prototype/
 
 # File
 sv24-windows-64bit.zip

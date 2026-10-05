@@ -91,143 +91,94 @@ class Crediti extends FlxState {
 
         // top bar black (by loading texture)
         blackTopBar = new FlxSprite().loadGraphic(Paths.image('title/topBlackBar2'));
+        blackTopBar.setGraphicSize(1280, 720);
+        blackTopBar.updateHitbox();
         blackTopBar.y = -FlxG.height;
         // add(blackTopBar);
 
-        // blackTopper (by code)
-        blackTopper = new FlxSprite().makeGraphic(FlxG.width, 28, FlxColor.BLACK);
-        blackTopper.y = 0;
+        // blackTopper (barra nera superiore per la risoluzione 720p)
+        blackTopper = new FlxSprite().makeGraphic(FlxG.width, 80, FlxColor.BLACK); // Ingrandita l'altezza della barra a 80px per il titolo più grande
+        blackTopper.y = -blackTopper.height;
         add(blackTopper);
 
-        // prototipo fino al 22/05/2024, ora è nella sua fase di rilascio
-        protoText2 = new FlxText(0, 0, 0, 'PROTOTIPO', 10);
+        // prototipo (early build)
+        protoText2 = new FlxText(0, 0, 0, 'PROTOTIPO', 18);
+        protoText2.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
         protoText2.screenCenter(X);
-        protoText2.y = 230;
-        protoText2.setFormat(Paths.font('vcr.ttf'), 10, FlxColor.WHITE);
+        protoText2.y = 680;
         // add(protoText2); 
 
-        /* uhhh il progetto ha preso una svolta, tanta gente lo adora adesso.
-        A dirla tutta sono felicissimo, eh nessuno ha mai supportato così tanto
-        un progetto diretto dal sottoscritto. Tutta questa hype mi motiva tantissimo
-        e chissà, nuovi contenuti? Beh per ora posso solo dirvi, thank you! */
-        creditsUpdate = new FlxSprite(); // un piccolo pensierino per voi...
+        creditsUpdate = new FlxSprite();
         creditsUpdate.loadGraphic(Paths.image("credits/Credits_31072024_update"));
+        creditsUpdate.setGraphicSize(1280, 720);
+        creditsUpdate.updateHitbox();
         creditsUpdate.y = -FlxG.height;
-        add(creditsUpdate);
+        // add(creditsUpdate);
 
-        // testo per tornare al menu
-        exitText = new FlxText();
-        exitText.color = FlxColor.WHITE;
-        exitText.size = 15;
-        // exitText.screenCenter(X);
-        exitText.x = 30;
-        exitText.y = 215;
-        #if mobile
-        exitText.text = 'Clicca per tornare indietro';
-        #else
-        exitText.text = 'Premi B per tornare indietro';
-        #end
-        exitText.font = 'vcr.ttf';
-        exitText.setFormat(Paths.font('vcr.ttf'), 15, FlxColor.WHITE);
-        exitText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        exitText.updateHitbox();
-        add(exitText);
-
-        // THE VACCARELLA CREW
-        credText = new FlxText(/*0, 10, 0, "The Vaccarella Crew", 20*/);
-        credText.x = 114;
-        // credText.y = 0.5;
-        credText.y = -FlxG.height;
-        credText.text = 'CREDITI';
-        credText.setFormat(Paths.font("vcr.ttf"), 23, FlxColor.WHITE, CENTER);
-        // credText.screenCenter(X);
+        // THE VACCARELLA CREW - TITOLO (MOLTO PIÙ GRANDE)
+        credText = new FlxText(0, -FlxG.height, FlxG.width, 'CREDITI');
+        credText.setFormat(Paths.font("vcr.ttf"), 60, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        credText.borderSize = 3;
         add(credText);
 
         // NUTS TEAM LOGO - BY ALESSANDRO!
         nutsTeamLogo = new FlxSprite().loadGraphic(Paths.image('credits/nutsTeam_logo_posizionato'));
-        // nutsTeamLogo.x = -80;
-        // nutsTeamLogo.updateHitbox();
         nutsTeamLogo.visible = true;
-        nutsTeamLogo.y = -blackTopBar.y;
-        // nutsTeamLogo.scale.set(0.6, 0.6);
-        // nutsTeamLogo.setGraphicSize(70);
+        nutsTeamLogo.y = -blackTopBar.height;
         // add(nutsTeamLogo);
 
-        /* TEXT DATA */
-        mAleD = new FlxText(0, /*60*/-FlxG.height, 0, "Alessandro D'Antuono", 20);
-        mFraP = new FlxText(0, /*80*/-FlxG.height, 0, "Francesco Pio Pipino", 20);
-        mStef = new FlxText(0, /*100*/-FlxG.height, 0, "Stefano Cristino", 20);
-        mEman = new FlxText(0, /*120*/-FlxG.height, 0, "Emanuele Tarantella", 20);
-        mAleQ = new FlxText(0, /*140*/-FlxG.height, 0, "Alessio Quitadamo", 20);
-        mDanM = new FlxText(0, /*160*/-FlxG.height, 0, "Daniele Martucci", 20);
+        /* TEXT DATA (DIMENSIONI MOLTO PIÙ IMPONENTI) */
+        mAleD = new FlxText(0, -FlxG.height, FlxG.width, "Alessandro D'Antuono");
+        mFraP = new FlxText(0, -FlxG.height, FlxG.width, "Francesco Pio Pipino");
+        mStef = new FlxText(0, -FlxG.height, FlxG.width, "Stefano Cristino");
+        mEman = new FlxText(0, -FlxG.height, FlxG.width, "Emanuele Tarantella");
+        mAleQ = new FlxText(0, -FlxG.height, FlxG.width, "Alessio Quitadamo");
+        mDanM = new FlxText(0, -FlxG.height, FlxG.width, "Daniele Martucci");
 
-        /* FONT DATA */
-        mAleD.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
-        mFraP.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
-        mStef.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
-        mEman.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
-        mAleQ.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
-        mDanM.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, CENTER);
+        var creditTexts:Array<FlxText> = [mAleD, mFraP, mStef, mEman, mAleQ, mDanM];
 
-        /* BORDER STYLE DATA */
-        mAleD.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        mFraP.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        mStef.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        mEman.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        mAleQ.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
-        mDanM.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 0.5, 1);
+        /* FORMATTAZIONE E BORDI */
+        for (txt in creditTexts)
+        {
+            txt.setFormat(Paths.font('vcr.ttf'), 50, FlxColor.WHITE, CENTER); // Dimensione portata a 42px
+            txt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 3);
+            add(txt);
+        }
 
-        /* POSITION DATA */
-        mAleD.screenCenter(X);
-        mFraP.screenCenter(X);
-        mStef.screenCenter(X);
-        mEman.screenCenter(X);
-        mAleQ.screenCenter(X);
-        mDanM.screenCenter(X);
+        // testo per tornare al menu (In basso)
+        exitText = new FlxText(0, 630, FlxG.width, "");
+        #if mobile
+        exitText.text = 'Tocca per tornare indietro';
+        #else
+        exitText.text = 'Premi B per tornare indietro';
+        #end
+        exitText.setFormat(Paths.font('vcr.ttf'), 40, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        exitText.borderSize = 2.5;
+        add(exitText);
 
-        /* AGGIUNGI TUTTI ALLO STATE */
-        // add(mAleD);
-        // add(mFraP);
-        // add(mStef);
-        // add(mEman);
-        // add(mAleQ);
-        // add(mDanM);
-
-        /* ANIMATION DATA */
-        FlxTween.tween(mAleD, {y: 60}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(mFraP, {y: 80}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(mStef, {y: 100}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(mEman, {y: 120}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(mAleQ, {y: 140}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(mDanM, {y: 160}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        // FlxTween.tween(blackTopBar, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(blackTopper, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(credText, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(creditsUpdate, {y: 0.5}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        // FlxTween.tween(exitText, {y: 215}, 0.8, {ease: FlxEase.quartOut, startDelay: 0.5});
-        // FlxTween.tween(nutsTeamLogo, {y: 0}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
-        // FlxTween.tween(credText, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-
-        // protoText = new FlxText(200, 10, 0, "PROTOTIPO");
-        /*
-        protoText = new TextField();
-        var font = Assets.getFont('assets/fonts/vcr.ttf');
-        var fontFormat = new TextFormat(font.fontName, 20, FlxColor.WHITE);
-        protoText.text = "PROTOTIPO";
-        protoText.embedFonts = true;
-        protoText.defaultTextFormat = fontFormat;
-        protoText.x = Lib.current.stage.width - protoText.textWidth - 10;
-        protoText.y = Lib.current.stage.height - protoText.textHeight - 10;
-        */
-
-        /* MOBILE */
+        /* MOBILE VIRTUAL PAD */
         virtualPad = new FlxVirtualPad(NONE, A_B);
-        virtualPad.scale.set(0.5, 0.5);
-        virtualPad.x = 35;
-        virtualPad.y = 40;
+        virtualPad.scale.set(0.8, 0.8);
+        virtualPad.updateHitbox();
+        virtualPad.x = FlxG.width - virtualPad.width - 20;
+        virtualPad.y = FlxG.height - virtualPad.height - 20;
         #if (mobile || debug)
         // add(virtualPad);
         #end
+
+        /* ANIMATION DATA */
+        var startY:Float = 140; // Punto d'inizio verticale
+        var spacingY:Float = 75; // Distanza aumentata tra i nomi per distanziarli bene con i caratteri grandi
+
+        FlxTween.tween(blackTopper, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(credText, {y: 10}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
+
+        FlxTween.tween(mAleD, {y: startY}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(mFraP, {y: startY + spacingY}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(mStef, {y: startY + (spacingY * 2)}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(mEman, {y: startY + (spacingY * 3)}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(mAleQ, {y: startY + (spacingY * 4)}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(mDanM, {y: startY + (spacingY * 5)}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
     }
 
     override function update(elapsed:Float) {

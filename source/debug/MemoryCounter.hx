@@ -24,7 +24,7 @@ class MemoryCounter extends TextField
     this.selectable = false;
     this.mouseEnabled = false;
     defaultTextFormat = new TextFormat("_sans", 12, color);
-    text = "RAM: ";
+    text = "RAM USATA: ";
 
     #if flash
     addEventListener(Event.ENTER_FRAME, function(e) {
@@ -42,6 +42,6 @@ class MemoryCounter extends TextField
 
     if (mem > memPeak) memPeak = mem;
 
-    text = 'RAM: ${mem}mb / ${memPeak}mb';
+    text = 'RAM USATA: ${mem}mb / ${memPeak}mb';
   }
 }

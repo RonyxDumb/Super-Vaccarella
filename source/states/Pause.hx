@@ -84,40 +84,38 @@ class Pause extends FlxSubState {
         FlxTween.tween(cubeGrid, {alpha: 0.6}, 0.5, {ease: FlxEase.smoothStepIn});
         add(cubeGrid);
 
-        /* box nel quale poneremo la scritta 'PAUSA' */
-        box = new FlxSprite().makeGraphic(157, 65, FlxColor.BLACK);
+        /* box nel quale porremo la scritta 'PAUSA' (Ingrandito a 450x180 per 1280x720) */
+        box = new FlxSprite().makeGraphic(450, 180, FlxColor.BLACK);
         box.screenCenter(XY);
         box.alpha = 0.6;
         add(box);
 
-        /* texture della scritta 'PAUSA' */
+        /* texture della scritta 'PAUSA' (Ingrandita al doppio rispetto a prima) */
         var pauseText:FlxSprite = new FlxSprite().loadGraphic(Paths.image("pause/PAUSE"));
-        pauseText.scale.set(0.4, 0.4);
+        pauseText.scale.set(0.8, 0.8);
+        pauseText.updateHitbox();
         pauseText.screenCenter(XY);
-        // pauseText.y += (pauseText.height) * 2;
         add(pauseText);
 
-        /* testo per chiudere il menu della pausa */
+        /* testo per chiudere il menu della pausa (Centrato in basso e ben visibile) */
         exitCourse = new FlxText();
         #if mobile
         exitCourse.text = 'Clicca qui per tornare al menu';
         #else
         exitCourse.text = 'Premi E per tornare al menu';
         #end
-        exitCourse.color = FlxColor.RED;
-        exitCourse.font = 'vcr.ttf';
-        exitCourse.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1);
-        exitCourse.size = 15;
-        exitCourse.y = 220;
-        exitCourse.x = 1;
+        exitCourse.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.RED, CENTER);
+        exitCourse.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
+        exitCourse.screenCenter(X);
+        exitCourse.y = FlxG.height - exitCourse.height - 50; // Posizionato a 50px dal bordo inferiore
         add(exitCourse);
 
-        /* texture inutilizzata */
-        shitterText = new FlxText(12, FlxG.height, 315, "Resume"/*, 20*/);
-        shitterText.setFormat(Paths.font("Mario64.ttf"), 34, FlxColor.WHITE, CENTER);
-		shitterText.x = ((box.width - shitterText.width) / 2) + box.x;
-		shitterText.y = ((box.height - shitterText.height) / 2) + box.y;
-        //add(shitterText);
+        /* texture inutilizzata (Adattata alle nuove dimensioni del box) */
+        shitterText = new FlxText(0, 0, box.width, "Resume");
+        shitterText.setFormat(Paths.font("Mario64.ttf"), 48, FlxColor.WHITE, CENTER);
+        shitterText.x = box.x;
+        shitterText.y = box.y + ((box.height - shitterText.height) / 2);
+        // add(shitterText);
 
         /* emetti suono di pausa */
         pauseSFX = new FlxSound().loadEmbedded(Paths.sound('sm64_pause'), false);
@@ -157,7 +155,7 @@ class Pause extends FlxSubState {
             close();
 
             /* riporta il zoom della camera al valore in partita */
-            FlxG.camera.zoom = 1.9;
+            FlxG.camera.zoom = 6;
 
             /* riavvia la riproduzione della BGM */
             FlxG.sound.music.resume(); /* dal punto in cui si era interrotta */

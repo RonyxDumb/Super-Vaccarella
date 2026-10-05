@@ -115,36 +115,39 @@ class Game extends FlxState {
         runText.visible = true;
         // add(runText);
 
+        // 1. Inizializza il pad
         virtualPad = new FlxVirtualPad(FULL, NONE);
-        // virtualPad.scale.set(0.5, 0.5);
-        virtualPad.alpha = 0.80;
-        virtualPad.updateHitbox();
+        virtualPad.alpha = 0.8;
+        virtualPad.scrollFactor.set(0, 0);
 
-        virtualPad.forEach((s)-> {
-            s.setGraphicSize(Std.int(s.width * 0.5));
-            s.updateHitbox();
+        // 2. Dimensione dei singoli pulsanti
+        // I pulsanti base sono 44x45 px. Con scala 2.0 diventano ~90px, ideali per il pollice.
+        final BTN_SCALE:Float = 2.0; 
+        final SPACING:Float = 85; // Distanza perfetta tra i centri dei pulsanti scalati
+
+        virtualPad.forEach((button) -> {
+            button.scale.set(BTN_SCALE, BTN_SCALE);
+            button.updateHitbox();
         });
 
-        // CAZZO FINALMENTE!
-        // 30/07/2024 LAYOUT DEI COMANDI MOBILE PERFEZIONATI
-        // (la loro posizione intendo eh)
-        virtualPad.buttonUp.x = 30.5; // done
-        virtualPad.buttonUp.y = 37; // done
+        // 3. Coordinate interne a croce (layout pulito senza sovrapposizioni)
+        virtualPad.buttonUp.x = SPACING;
+        virtualPad.buttonUp.y = 0;
 
-        virtualPad.buttonDown.x = 30.5; // done
-        virtualPad.buttonDown.y = 145; // done
+        virtualPad.buttonLeft.x = 0;
+        virtualPad.buttonLeft.y = SPACING;
 
-        virtualPad.buttonRight.x = 87; // done
-        virtualPad.buttonRight.y = 90; // done
+        virtualPad.buttonRight.x = SPACING * 2;
+        virtualPad.buttonRight.y = SPACING;
 
-        virtualPad.buttonLeft.y = 90; // done
-        virtualPad.buttonLeft.x = -30; // done
+        virtualPad.buttonDown.x = SPACING;
+        virtualPad.buttonDown.y = SPACING * 2;
 
+        // 4. Posizionamento fisso del blocco in basso a sinistra su 1280x720
         virtualPad.x = 30;
-        virtualPad.y = 30;
-        #if mobile
-        this.add(virtualPad);
-        #end
+        virtualPad.y = 430; // Posizione Y fissa e sicura per 720p
+
+        add(virtualPad);
 
         /* passa questi elementi alla "hudCamera" */
         pauseText.cameras = [hudCamera];
@@ -250,7 +253,7 @@ class Game extends FlxState {
 		// hudCamera.follow(player); // segui il giocatore
 
         /* zoom della camera */
-        FlxG.camera.zoom = 1.9;
+        FlxG.camera.zoom = 6;
     }
 
     function fallInClouds(Tile:FlxObject, Object:FlxObject):Void
@@ -287,7 +290,7 @@ class Game extends FlxState {
         var distance:Float = Math.sqrt(dx * dx + dy * dy);
 
         /* vaccarellaEnemy deve inseguire il giocatore */
-        vaccarellaEnemy.x += dx / distance * 2.40; // velocità del chaser
+        vaccarellaEnemy.x += dx / distance * 2.40; // velocità del chaser 2.40
         vaccarellaEnemy.y += dy / distance * 2.40;
 
         if (pressedUp || pressedDown || pressedLeft || pressedRight) {
@@ -390,14 +393,14 @@ class Game extends FlxState {
             player.setGraphicSize(20, 20);
 
             /* avvia l'animazione */
-            player.animation.play('dancin', false);
+            // player.animation.play('dancin', false);
         }
 
         /* se clicchi P, entra in pausa */
         #if (!mobile)
         if (pressedPause) {
             /* apri SubState della Pausa */
-            openSubState(new Pause(0, 0));
+            // openSubState(new Pause(0, 0));
         }
         #end
 

@@ -8,6 +8,7 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxDirectionFlags;
 /**
  * date:02/05/2024
  * Il giocatore, con il quale puoi:
@@ -16,6 +17,8 @@ import flixel.FlxSprite;
  * - Interagire con gli elementi (updateHitBox)
  * - Animarlo (Mario che fa la default dance)
  */
+using flixel.util.FlxDirectionFlags;
+
 class Player4Directions extends FlxSprite {
 
     #if (html5 && VACCARELLA_CHASE)
@@ -55,17 +58,20 @@ class Player4Directions extends FlxSprite {
         virtualPad.x = 30;
         virtualPad.y = 30;
 
-        frames = FlxAtlasFrames.fromSparrow('assets/images/player/marioDefaultDance.png', 'assets/images/player/marioDefaultDance.xml');
-        animation.addByPrefix('dancin', 'df3jhrp-2cef341a-5ee8-4c5f-9906-bba784b80eb6_', 30, false);
+        // frames = FlxAtlasFrames.fromSparrow('assets/images/player/marioDefaultDance.png', 'assets/images/player/marioDefaultDance.xml');
+        // animation.addByPrefix('dancin', 'df3jhrp-2cef341a-5ee8-4c5f-9906-bba784b80eb6_', 30, false);
+        loadGraphic(Paths.image("player/superVacc"));
+
+        // makeGraphic(4, 14, FlxColor.RED, false);
         
         /* imposta la grandezza */
-        setGraphicSize(14, 14);
+        setGraphicSize(17, 17);
 
         /* aggiorna la hitbox */
         updateHitbox();
 
-        setFacingFlip(FlxObject.LEFT, false, false);
-        setFacingFlip(FlxObject.RIGHT, true, false);
+        setFacingFlip(LEFT, false, false);
+        setFacingFlip(RIGHT, true, false);
 
        /* rallenta il giocatore in mancanza di inputs */
        drag.x = drag.y = 1600;

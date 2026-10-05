@@ -10,12 +10,13 @@ import flixel.input.FlxInput;
 import flixel.input.FlxPointer;
 import flixel.input.IFlxInput;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.util.FlxDestroyUtil;
+// import flixel.util.IFlxDestroyable;
 import flixel.input.touch.FlxTouch;
 
-// Mofifications by saw (m.a. jigsaw)
+// Modifications by saw (m.a. jigsaw)
 class FlxButton extends FlxTypedButton<FlxText>
 {
 	public static inline var NORMAL:Int = 0;
@@ -139,7 +140,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 
 	function setupAnimation(animationName:String, frameIndex:Int):Void
 	{
-		frameIndex = Std.int(Math.min(frameIndex, animation.frames - 1));
+		frameIndex = Std.int(Math.min(frameIndex, numFrames - 1));
 		animation.add(animationName, [frameIndex]);
 	}
 
@@ -413,7 +414,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	}
 }
 
-private class FlxButtonEvent implements IFlxDestroyable
+class FlxButtonEvent implements IFlxDestroyable
 {
 	public var callback:Void->Void;
 
@@ -430,7 +431,7 @@ private class FlxButtonEvent implements IFlxDestroyable
 		#end
 	}
 
-	public inline function destroy():Void
+	public function destroy():Void
 	{
 		callback = null;
 
@@ -439,7 +440,7 @@ private class FlxButtonEvent implements IFlxDestroyable
 		#end
 	}
 
-	public inline function fire():Void
+	public function fire():Void
 	{
 		if (callback != null)
 			callback();

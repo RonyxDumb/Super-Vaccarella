@@ -39,27 +39,31 @@ class EndScreen extends FlxState {
         /* fade-out (lento) della camera */
         FlxG.camera.fade(FlxColor.BLACK, 3, true);
 
-        /* texture della schermata finale */
+        /* texture della schermata finale (scalata a 1280x720) */
         theEndScreen = new FlxSprite().loadGraphic(Paths.image('theEnd/TheEndScreen'));
-        theEndScreen.y = 0;
-        theEndScreen.x = 0;
+        theEndScreen.setGraphicSize(FlxG.width, FlxG.height);
+        theEndScreen.updateHitbox();
+        theEndScreen.screenCenter();
         add(theEndScreen);
- 
-        /* texture scritta per tornare al menu */
+
+        /* texture scritta per tornare al menu (scalata a 1280x720) */
         #if mobile
         underTextBack = new FlxSprite().loadGraphic(Paths.image('theEnd/underTextBack_mobile'));
         #else
         underTextBack = new FlxSprite().loadGraphic(Paths.image('theEnd/underTextBack'));
         #end
-        underTextBack.x = 0;
-        underTextBack.y = -FlxG.height;
+        underTextBack.setGraphicSize(FlxG.width, FlxG.height);
+        underTextBack.updateHitbox();
+        underTextBack.screenCenter(X);
+        underTextBack.y = -FlxG.height; // Parte fuori dallo schermo in alto per l'animazione
         add(underTextBack);
 
-        /* MOBILE */
+        /* MOBILE (Virtual Pad proporzionato e posizionato in basso a destra) */
         virtualPad = new mobile.FlxVirtualPad(NONE, A);
-        virtualPad.y = 28;
-        virtualPad.x = 15;
-        virtualPad.scale.set(0.7, 0.7);
+        virtualPad.scale.set(1.0, 1.0); // Ingrandito rispetto allo 0.7 per schermi HD
+        virtualPad.updateHitbox();
+        virtualPad.x = FlxG.width - virtualPad.width - 30;
+        virtualPad.y = FlxG.height - virtualPad.height - 30;
         #if (mobile || debug)
         // add(virtualPad);
         #end
@@ -73,7 +77,7 @@ class EndScreen extends FlxState {
             /* abilita i comandi */
             FlxG.keys.enabled = true;
 
-            /* animazione per la scritta */
+            /* animazione per la scritta (scende fino a sovrapporsi perfettamente a Y: 0) */
             FlxTween.tween(underTextBack, {y: 0}, 0.7, {ease: FlxEase.quartOut, startDelay: 0.5});
         });
     }

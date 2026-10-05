@@ -75,83 +75,91 @@ class Menu extends FlxState {
         blackBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
         add(blackBG);
 
-        /* tavola gialla di selezione  */
+        /* tavola gialla di selezione */
         yellowBG = new FlxSprite().loadGraphic(Paths.image('menu/yellowBG'));
+        yellowBG.setGraphicSize(1280, 720);
+        yellowBG.updateHitbox();
+        yellowBG.screenCenter();
         yellowBG.y = -FlxG.height;
         add(yellowBG);
 
         /* texture scritta 'FILE SELECT' */
         selectTexture = new FlxSprite().loadGraphic(Paths.image('menu/select_file'));
+        selectTexture.setGraphicSize(Std.int(selectTexture.width * 3.8)); // Ridotto leggermente da 5.0 a 3.8
+        selectTexture.updateHitbox();
         selectTexture.screenCenter(X);
-        // selectTexture.y = 40;
         selectTexture.y = -FlxG.height;
         add(selectTexture);
 
+        /* --- POSIZIONAMENTO A SINISTRA --- */
+        var startX:Float = 260; // Spostato decisamente più a sinistra (prima era 330/360)
+        var startY:Float = 260;
+
         /* texture bottone grigio */
         buttonPlay = new FlxSprite().loadGraphic(Paths.image('menu/button'));
-        buttonPlay.scale.set(0.4, 0.4);
+        buttonPlay.setGraphicSize(Std.int(buttonPlay.width * 1.0)); // Dimensioni intermedie
         buttonPlay.updateHitbox();
-        buttonPlay.x = 60;
-        buttonPlay.y = 70;
-        // buttonPlay.y = -FlxG.height;
+        buttonPlay.x = startX;
+        buttonPlay.y = startY;
         add(buttonPlay);
 
-        /* testo collegato al 'buttonPlay' per procedere con il gioco */
-        giocaText = new FlxText();
-        giocaText.size = 10;
+        /* testo collegato al 'buttonPlay' */
+        giocaText = new FlxText(buttonPlay.x + buttonPlay.width + 25, 0, 0, "");
         #if mobile
-        giocaText.text = 'Clicca per giocare';
+        giocaText.text = 'Tocca per giocare';
         #else
-        giocaText.text = 'Clicca A per giocare';
+        giocaText.text = 'Premi A per giocare';
         #end
-        giocaText.x = buttonPlay.x + 65;
-        // giocaText.y = -FlxG.height;
-        giocaText.y = buttonPlay.y + 12;
+        giocaText.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        giocaText.borderSize = 2;
+        giocaText.y = buttonPlay.y + (buttonPlay.height - giocaText.height) / 2;
         add(giocaText);
         
         /* bottone rosso */
         redStone = new FlxSprite().loadGraphic(Paths.image('menu/RedStone1'));
-        redStone.x = 60;
-        redStone.y = 130;
-        redStone.scale.set(0.4, 0.4);
+        redStone.setGraphicSize(Std.int(redStone.width * 1.0)); // Dimensioni intermedie
         redStone.updateHitbox();
+        redStone.x = startX;
+        redStone.y = buttonPlay.y + buttonPlay.height + 25;
         add(redStone);
 
-        /* testo collegato al 'redStone' per procedere con i crediti */
-        creditiText = new FlxText();
-        creditiText.size = 10;
+        /* testo collegato al 'redStone' */
+        creditiText = new FlxText(redStone.x + redStone.width + 25, 0, 0, "");
         #if mobile
-        creditiText.text = 'Clicca per i crediti';
+        creditiText.text = 'Tocca per i crediti';
         #else
-        creditiText.text = 'Clicca C per i crediti';
+        creditiText.text = 'Premi C per i crediti';
         #end
-        creditiText.x = redStone.x + 65;
-        creditiText.y = redStone.y + 12;
+        creditiText.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        creditiText.borderSize = 2;
+        creditiText.y = redStone.y + (redStone.height - creditiText.height) / 2;
         add(creditiText);
 
         /* testo per tornare indietro */
-        turnBackText = new FlxText();
+        turnBackText = new FlxText(0, 560, 1280, "");
         #if mobile
-        turnBackText.text = 'Clicca per tornare indietro';
+        turnBackText.text = 'Tocca per tornare indietro';
         #else
-        turnBackText.text = 'Clicca B per tornare indietro';
+        turnBackText.text = 'Premi B per tornare indietro';
         #end
-        turnBackText.size = 10;
+        turnBackText.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.GRAY, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        turnBackText.borderSize = 2;
         turnBackText.screenCenter(X);
-        turnBackText.y = 190;
         add(turnBackText);
 
-        /* MOBILE */
+        /* MOBILE VIRTUAL PAD */
         virtualPad = new FlxVirtualPad(NONE, A_B_C);
-        virtualPad.scale.set(0.5, 0.5);
-        // virtualPad.alpha = 0.45;
-        virtualPad.y = 40;
-        virtualPad.x = 30;
-        // add(virtualPad);
+        virtualPad.scale.set(0.8, 0.8);
+        virtualPad.updateHitbox();
+        virtualPad.x = FlxG.width - virtualPad.width - 20;
+        virtualPad.y = FlxG.height - virtualPad.height - 20;
+        #if (mobile || debug)
+        add(virtualPad);
+        #end
 
         /* ANIMATION DATA */
         FlxTween.tween(yellowBG, {y: 0}, 0.4, {ease: FlxEase.quartOut, startDelay: 0.5});
-        FlxTween.tween(selectTexture, {y: 40}, 0.6, {ease: FlxEase.quartOut, startDelay: 0.5});
+        FlxTween.tween(selectTexture, {y: 110}, 0.6, {ease: FlxEase.quartOut, startDelay: 0.5});
     }
 
     override function update(elapsed:Float) {
